@@ -1,11 +1,10 @@
 #include "Component.h"
 namespace goodengine {
 
-	//std::shared_ptr<GameObject> Component::getGameObject()
-	//{
-
-	//}
-
+	std::shared_ptr<GameObject> Component::getGameObject()
+	{
+		return gameObject.lock();
+	}
 	void Component::onInit()
 	{
 		std::cout << "INIT" << std::endl;

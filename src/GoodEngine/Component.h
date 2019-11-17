@@ -12,10 +12,8 @@ namespace goodengine {
 	public:
 		friend class goodengine::GameObject;
 
-		// Do get functions need an argument?
-		//std::shared_ptr<GameObject> getGameObject();
-
-		// getCore()
+		// get GameObject
+		std::shared_ptr<GameObject> getGameObject();
 
 	protected:
 		std::weak_ptr<GameObject> gameObject;
@@ -24,6 +22,10 @@ namespace goodengine {
 		virtual void onBegin();
 		virtual void onTick();
 		virtual void onDisplay();
+
+	private:
+
+
 	};
 
 }

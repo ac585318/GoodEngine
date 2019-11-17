@@ -11,10 +11,32 @@ add_library(GoodEngine
   src/GoodEngine/GameObject.h
   src/GoodEngine/Component.cpp
   src/GoodEngine/Component.h
+  src/GoodEngine/Exception.cpp
+  src/GoodEngine/Exception.h
+  src/GoodEngine/Transform.cpp
+  src/GoodEngine/Transform.h
+  src/GoodEngine/MeshRenderer.cpp
+  src/GoodEngine/MeshRenderer.h
 )
+target_link_libraries(GoodEngine SDL2 OPENGL32 GLEW32)
+
+add_library(rend
+  src/rend/Exception.cpp
+  src/rend/Context.cpp
+  src/rend/Texture.cpp
+  src/rend/RenderTexture.cpp
+  src/rend/Shader.cpp
+  src/rend/Buffer.cpp
+)
+if(MSVC)
+  target_link_libraries(rend glew32 opengl32)
+else()
+  target_link_libraries(rend GLEW GL)
+endif()
 
 add_executable(sandbox
   src/sandbox/main.cpp
   src/sandbox/TestScene.h
+  src/sandbox/TestScene.cpp
 )
 target_link_libraries(sandbox GoodEngine)

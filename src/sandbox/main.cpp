@@ -13,10 +13,10 @@ int main()
 	shared<Core> core = Core::initialize();
 
 	// Create a single in-game object
-	shared<GameObject> go = core->addGameObject();
-
+	shared<GameObject> go = core->addGameObject();
 	// Add a very simple component to it
-	weak<TestScene> testScreen = go->addComponent<TestScene>();
+	//weak<TestScene> testScreen = go->addComponent<TestScene>();
+	weak<MeshRenderer> mr = go->addComponent<MeshRenderer>();
 
 	// Start the engine’s main loop
 	core->run();
