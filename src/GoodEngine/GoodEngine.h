@@ -3,12 +3,22 @@
 #define GOODENGINE_GOODENGINE_H
 
 #include "Core.h"
-#include "Component.h"
+#include "Enviroment.h"
 #include "GameObject.h"
-#include "MeshRenderer.h"
+#include "Transform.h"
+#include "Component.h"
+#include "Resources.h"
+#include "Resource.h"
 #include "Exception.h"
+#include "MeshRenderer.h"
+#include "Mesh.h"
+#include "Texture.h"
+#include "AudioSource.h"
+#include "Audio.h"
+#include "Keyboard.h"
+#include "Mouse.h"
+#include "BoxCollider.h"
 
-#include <rend/rend.h>
 #include <sr1/memory>
 
 #define shared std::shared_ptr

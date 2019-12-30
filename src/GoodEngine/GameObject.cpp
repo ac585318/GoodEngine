@@ -14,6 +14,18 @@ namespace goodengine {
 		{
 			Components.at(i)->onTick();
 		}
+
+		for (std::vector<std::shared_ptr<Component>>::iterator it = Components.begin(); it != Components.end();)	// Seems to be a problem, is it when there is only one component? // fixed, i think
+		{
+			if (!(*it)->alive)
+			{
+				it = Components.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
 	}
 
 	void GameObject::display()

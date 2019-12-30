@@ -1,7 +1,8 @@
-#pragma once
-
 #include <memory>
 #include <vector>
+#include "Transform.h"
+//#include <rend/rend.h>
+//#include <GoodEngine\Exception.h>
 
 namespace goodengine {
 
@@ -11,7 +12,7 @@ namespace goodengine {
 	class GameObject
 	{
 	public:
-		friend class goodengine::Core;
+		friend class Core;
 		
 		std::shared_ptr<Core> getCore();
 		void tick();
@@ -22,8 +23,10 @@ namespace goodengine {
 		{
 			std::shared_ptr<T> rtn = std::make_shared<T>();
 
-			// Set rtn parent...
+			// Set rtn parent
 			rtn->gameObject = self;
+
+			rtn->onInit();
 
 			Components.push_back(rtn);
 
@@ -43,7 +46,7 @@ namespace goodengine {
 				}
 			}
 
-			throw Exception("Failed to find specified component");
+			throw rend::Exception("Failed to find specified component");	// Something is wrong with using goodengine::exception, maybe because they use the same file names?
 		}
 
 	protected:

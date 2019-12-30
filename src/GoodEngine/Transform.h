@@ -2,18 +2,21 @@
 
 #include "Component.h"
 
+#include <rend/rend.h>
+
 namespace goodengine {
 
 	class Transform : public Component
 	{
 	public:
-		//pos
-		//rot
-		//scale
+		void onInit();
+		//getModel
+		glm::vec3 getPosition();
+		void setPosition(glm::vec3 _pos);
 
 	private:
-		//getModel
-		//getPos
-		//setPos
+		glm::vec3 position;
+		glm::vec3 rotation;
+		//vec3 scale;
 	};
 }
