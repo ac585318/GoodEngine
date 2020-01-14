@@ -14,17 +14,13 @@ int main()
 
 	// Create a single in-game object
 	shared<GameObject> go = core->addGameObject();
-	// Add a very simple component to it
+	// Add a MeshRenderer, load mesh, set mesh
 	shared<MeshRenderer> mr = go->addComponent<MeshRenderer>();
-
 	shared<Mesh> mesh = core->getResources()->load<Mesh>("share/rend/samples/curuthers/curuthers.obj");
-
 	mr->setMesh(mesh);
 
-	// load texture here
+	// Load and set texture
 	shared<Texture> texture = core->getResources()->load<Texture>("share/rend/samples/curuthers/Whiskers_diffuse.png");
-
-	// set texture here
 	mr->setTexture("u_Texture", texture);
 
 	// Audio

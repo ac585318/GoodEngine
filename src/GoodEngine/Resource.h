@@ -1,4 +1,6 @@
 #pragma once
+#ifndef GOODENGINE_RESOURCE_H
+#define GOODENGINE_RESOURCE_H
 
 #include <string>
 #include <memory>
@@ -20,3 +22,5 @@ namespace goodengine {
 	};
 
 }
+
+#endif

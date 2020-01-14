@@ -9,15 +9,27 @@ namespace goodengine {
 	class Core;
 	class Component;
 
+	///
+	/// A class for game objects and entities. Contains a vector of Component.
+	/// GameObject objects are owned and updated within Core.
+	///
 	class GameObject
 	{
 	public:
 		friend class Core;
-		
+		///
+		/// \brief Returns a pointer to the Core object
+		/// \return Shared pointer to Core
+		///
 		std::shared_ptr<Core> getCore();
-		void tick();
-		void display();
 
+		///
+		/// \brief Add a specified Component type class to this GameObject
+		///
+		/// Use this to add child classes of Component to the GameObject
+		///
+		/// \return Shared pointer to the specified Component class or child type
+		///
 		template <typename T>
 		std::shared_ptr<T> addComponent()
 		{
@@ -33,6 +45,13 @@ namespace goodengine {
 			return rtn;
 		}
 
+		///
+		/// \brief Add a specified Component type class to this GameObject
+		///
+		/// Use this to get child classes of Component to the GameObject
+		///
+		/// \return Shared pointer to the specified Component class or child type
+		///
 		template <typename T>
 		std::shared_ptr<T> getComponent()
 		{
@@ -45,11 +64,13 @@ namespace goodengine {
 					return rtn;
 				}
 			}
-
 			throw rend::Exception("Failed to find specified component");	// Something is wrong with using goodengine::exception, maybe because they use the same file names?
 		}
 
-	protected:
+	private:
+		void tick();
+		void display();
+
 		std::weak_ptr<Core> core;
 		std::weak_ptr<GameObject> self;
 

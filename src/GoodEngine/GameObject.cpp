@@ -14,8 +14,8 @@ namespace goodengine {
 		{
 			Components.at(i)->onTick();
 		}
-
-		for (std::vector<std::shared_ptr<Component>>::iterator it = Components.begin(); it != Components.end();)	// Seems to be a problem, is it when there is only one component? // fixed, i think
+		// Erase component ptr if not alive
+		for (std::vector<std::shared_ptr<Component>>::iterator it = Components.begin(); it != Components.end();)
 		{
 			if (!(*it)->alive)
 			{
@@ -33,6 +33,10 @@ namespace goodengine {
 		for (size_t i = 0; i < Components.size(); i++)
 		{
 			Components.at(i)->onDisplay();
+		}
+		for (size_t i = 0; i < Components.size(); i++)
+		{
+			Components.at(i)->onGui();
 		}
 	}
 }

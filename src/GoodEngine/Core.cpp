@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Resources.h"
+#include "Gui.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Enviroment.h"
@@ -14,7 +15,7 @@ namespace goodengine {
 		SDL_Quit();
 
 		alcMakeContextCurrent(NULL);
-		alcDestroyContext(audioContext);	// The lecture slides do this twice?
+		alcDestroyContext(audioContext);	// This is supposed to be done twice?
 		alcDestroyContext(audioContext);
 		alcCloseDevice(audioDevice);
 	}
@@ -27,7 +28,7 @@ namespace goodengine {
 		// Initialize SDL and window
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		{
-			throw std::exception();
+			throw std::exception("Failed to initialize SDL");
 		}
 		rtn->window = SDL_CreateWindow("GoodEngine Window",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -41,7 +42,7 @@ namespace goodengine {
 		}
 		if (glewInit() != GLEW_OK)
 		{
-			throw std::exception();
+			throw std::exception("Failed to initialize glew");
 		}
 
 		// Initialize Enviroment
@@ -55,7 +56,7 @@ namespace goodengine {
 
 		if (rtn->audioDevice == NULL)
 		{
-			throw std::exception();
+			throw std::exception("Failed to find an audio device");
 		}
 
 		rtn->audioContext = alcCreateContext(rtn->audioDevice, NULL);
@@ -63,14 +64,14 @@ namespace goodengine {
 		if (rtn->audioContext == NULL)
 		{
 			alcCloseDevice(rtn->audioDevice);
-			throw std::exception();
+			throw std::exception("Failed to create the audio context");
 		}
 		// Set as current audio context
 		if (!alcMakeContextCurrent(rtn->audioContext))
 		{
 			alcDestroyContext(rtn->audioContext);
 			alcCloseDevice(rtn->audioDevice);
-			throw std::exception();
+			throw std::exception("Failed to set the current audio context");
 		}
 
 		// Initialize Resources class
@@ -78,6 +79,11 @@ namespace goodengine {
 		rtn->resources->context = rtn->context;
 		rtn->resources->core = rtn;
 		
+		// Initialize Gui
+		rtn->gui = std::make_shared<Gui>();
+		rtn->gui->core = rtn;
+		rtn->gui->init();
+
 		// Initialize Keyboard and Mouse class
 		rtn->keyboard = std::make_shared<Keyboard>();
 		rtn->mouse = std::make_shared<Mouse>();
@@ -99,6 +105,16 @@ namespace goodengine {
 		gameObjects.push_back(rtn);
 
 		return rtn;
+	}
+
+	std::shared_ptr<Camera> Core::getActiveCam()
+	{
+		if (!activeCam.lock())
+		{
+			return nullptr;
+		}
+		
+		return activeCam.lock();
 	}
 
 	void Core::run()
@@ -123,7 +139,7 @@ namespace goodengine {
 			//	SDL_Delay((idealTime - enviroment->deltaTime) * 1000.0f);
 			//}
 
-				// SHOULD MOVE THIS TIME STUFF INTO ANOTHER CLASS - TODO
+				// SHOULD MOVE THIS TIME STUFF INTO ITS OWN CLASS - TODO
 			
 
 			// Clear pressed and released key vectors

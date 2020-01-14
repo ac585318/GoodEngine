@@ -1,5 +1,3 @@
-#pragma once
-
 #include <rend/rend.h>
 #include <vector>
 
@@ -17,6 +15,7 @@ namespace goodengine {
 		void load(std::string _path);
 	private:
 		friend class MeshRenderer;
+		friend class Gui;
 		std::shared_ptr<rend::Texture> texture;
 	};
 

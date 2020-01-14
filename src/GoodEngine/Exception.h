@@ -1,18 +1,30 @@
 #include <exception>
 #include <string>
 
-namespace goodengine
-{
+namespace goodengine {
+	///
+	/// An exception handling struct.
+	///
+	struct Exception : public std::exception
+	{
+	public:
+		///
+		/// \brief Sets an error message
+		///
+		Exception(const std::string& message);
 
-struct Exception : public std::exception
-{
-  Exception(const std::string& message);
-  virtual ~Exception() throw();
-  virtual const char* what() const throw();
+		///
+		/// \brief A virtual destructor
+		///
+		virtual ~Exception() throw();
 
-private:
-  std::string message;
+		///
+		/// \brief Returns the error message passed into the constructor
+		/// \return const char* exception message
+		virtual const char* what() const throw();
 
-};
+	private:
+		std::string message;
+	};
 
 }

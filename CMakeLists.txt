@@ -37,6 +37,10 @@ add_library(GoodEngine
   src/GoodEngine/Enviroment.h
   src/GoodEngine/BoxCollider.cpp
   src/GoodEngine/BoxCollider.h
+  src/GoodEngine/Gui.cpp
+  src/GoodEngine/Gui.h
+  src/GoodEngine/Camera.cpp
+  src/GoodEngine/Camera.h
 )
 target_link_libraries(GoodEngine SDL2 OpenAL32 rend)
 

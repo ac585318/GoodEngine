@@ -13,11 +13,13 @@
 #include "MeshRenderer.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "Gui.h"
 #include "AudioSource.h"
 #include "Audio.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "BoxCollider.h"
+#include "Camera.h"
 
 #include <sr1/memory>
 

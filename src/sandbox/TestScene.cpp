@@ -31,26 +31,69 @@ void TestScene::onInit()
 	shared<Texture> texture2 = getCore()->getResources()->load<Texture>("share/rend/samples/box/box.png");
 	mr2->setTexture("u_Texture", texture2);
 
-}
-void TestScene::onBegin()
-{
-	//std::cout << "BEGIN" << std::endl;
+	// GUI
+	guiTexture = getCore()->getResources()->load<Texture>("share/image1.png");
+
+	// Camera
+	go3 = getCore()->addGameObject();
+	go3->getComponent<Transform>()->setPosition(glm::vec3(0.0f, 0.0f, 10.0f));
+	shared<Camera> cam1 = go3->addComponent<Camera>();
+	getCore()->setActiveCam(cam1);
+
 }
 void TestScene::onTick()
 {
+	if (getKeyboard()->getKey(SDLK_w))
+	{
+		glm::vec3 camPos = go3->getComponent<Transform>()->getPosition();
+		camPos.z -= 0.005;
+		go3->getComponent<Transform>()->setPosition(camPos);
+	}
+	else if (getKeyboard()->getKey(SDLK_s))
+	{
+		glm::vec3 camPos = go3->getComponent<Transform>()->getPosition();
+		camPos.z += 0.005;
+		go3->getComponent<Transform>()->setPosition(camPos);
+	}
 	if (getKeyboard()->getKey(SDLK_a))
 	{
-		std::cout << "A HELD!" << std::endl;
+		glm::vec3 camPos = go3->getComponent<Transform>()->getPosition();
+		camPos.x -= 0.005;
+		go3->getComponent<Transform>()->setPosition(camPos);
 	}
-	else if (getKeyboard()->getKeyDown(SDLK_s))
+	else if (getKeyboard()->getKey(SDLK_d))
 	{
-		std::cout << "S DOWN!" << std::endl;
+		glm::vec3 camPos = go3->getComponent<Transform>()->getPosition();
+		camPos.x += 0.005;
+		go3->getComponent<Transform>()->setPosition(camPos);
 	}
-	else if (getKeyboard()->getKeyUp(SDLK_d))
+	if (getKeyboard()->getKey(SDLK_q))
 	{
-		std::cout << "D UP!" << std::endl;
+		glm::vec3 camPos = go3->getComponent<Transform>()->getPosition();
+		camPos.y -= 0.005;
+		go3->getComponent<Transform>()->setPosition(camPos);
 	}
-	else if (getMouse()->getMouseButton(SDL_BUTTON_LEFT))
+	else if (getKeyboard()->getKey(SDLK_e))
+	{
+		glm::vec3 camPos = go3->getComponent<Transform>()->getPosition();
+		camPos.y += 0.005;
+		go3->getComponent<Transform>()->setPosition(camPos);
+	}
+
+	if (getKeyboard()->getKey(SDLK_j))
+	{
+		glm::vec3 camRot = go3->getComponent<Transform>()->getRotation();
+		camRot.y -= 0.005;
+		go3->getComponent<Transform>()->setRotation(camRot);
+	}
+	else if (getKeyboard()->getKey(SDLK_l))
+	{
+		glm::vec3 camRot = go3->getComponent<Transform>()->getRotation();
+		camRot.y += 0.005;
+		go3->getComponent<Transform>()->setRotation(camRot);
+	}
+
+	if (getMouse()->getMouseButton(SDL_BUTTON_LEFT))
 	{
 		std::cout << "ML HELD!" << std::endl;
 	}
@@ -89,11 +132,24 @@ void TestScene::onTick()
 		go->getComponent<Transform>()->setPosition(pos);
 	}
 
+	if (getKeyboard()->getKey(SDLK_SPACE))
+	{
+		//getCore()->setActiveCam(nullptr);
+	}
+
+	// Spin
+	glm::vec3 rot = go2->getComponent<Transform>()->getRotation();
+	rot.y += 0.05;
+	go2->getComponent<Transform>()->setRotation(rot);
+
 	//glm::vec2 a = getMouse()->getMousePosition();
 	//std::cout << "X = " << a.x << " Y = " << a.y << std::endl;
-
 }
 void TestScene::onDisplay()
 {
 	//std::cout << "DISPLAY" << std::endl;
+}
+void TestScene::onGui()
+{
+	getCore()->getGui()->texture(glm::vec4(10, 10, 100, 100), guiTexture);
 }
