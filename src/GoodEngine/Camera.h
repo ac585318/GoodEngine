@@ -3,8 +3,6 @@
 
 namespace goodengine {
 
-	class Transform;
-
 	///
 	/// A Camera Component class.
 	/// Uses the Transform (position and rotation) of the GameObject it belongs to.
@@ -14,21 +12,15 @@ namespace goodengine {
 	public:
 		///
 		/// \brief Returns the projection matrix, the matrix cannot yet be modified
-		/// \return glm::mat4 of the projection matrix
+		/// \return A mat4 of the camera's projection matrix
 		///
 		glm::mat4 getProjection() { return projectionMatrix; }
 
 		///
 		/// \brief Updates and returns the view matrix
-		/// \return glm::mat4 of the view matrix
+		/// \return A mat4 of the camera's view matrix
 		///
 		glm::mat4 getView();
-
-		///
-		/// \brief A shortcut function to get the Transform Component from the parent GameObject
-		/// \return Shared pointer to the Transform Component
-		///
-		std::shared_ptr<Transform> getTransform();
 
 	private:
 		friend class goodengine::GameObject;
@@ -37,5 +29,4 @@ namespace goodengine {
 		glm::mat4 projectionMatrix;
 		glm::mat4 viewMatrix;
 	};
-
 }

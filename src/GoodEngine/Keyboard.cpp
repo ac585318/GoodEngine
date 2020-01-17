@@ -28,5 +28,4 @@ namespace goodengine {
 		}
 		return false;
 	}
-
 }

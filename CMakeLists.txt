@@ -66,8 +66,3 @@ add_executable(sandbox
   src/sandbox/TestScene.cpp
 )
 target_link_libraries(sandbox GoodEngine)
-
-add_executable(rotate
-  src/rotate/main.cpp
-)
-target_link_libraries(rotate rend SDL2)

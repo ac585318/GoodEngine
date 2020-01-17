@@ -11,9 +11,9 @@ namespace goodengine {
 		/// \return float deltaTime
 		///
 		float getDeltaTime() { return deltaTime; }
+
 	private:
 		friend class Core;
 		float deltaTime;
 	};
-
 }

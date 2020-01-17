@@ -8,7 +8,10 @@ namespace goodengine {
 	void BoxCollider::onInit()
 	{
 		size = glm::vec3(1, 1, 1);
+		offset = glm::vec3(0, 0, 0);
 		lastPosition = getGameObject()->getComponent<Transform>()->getPosition();
+		staticCollider = false;
+		triggerHit = false;
 	}
 
 	void BoxCollider::setSize(glm::vec3 _size)
@@ -23,13 +26,16 @@ namespace goodengine {
 
 	void BoxCollider::onTick()
 	{
+		// Doesn't seem to work properly if the game window isn't in focus...
+
+		// staticColliders shouldn't move, but can push non-staticColliders and pass through each other
+		if (staticCollider) return;
+
 		//	BOX COLLISION
 		std::vector<std::shared_ptr<GameObject>> boxObjVec;
-
 		getCore()->getGameObjects<BoxCollider>(boxObjVec);
-
-		//									TRY SIMPLIFY WITH CODE IN COMPONENT.H 26
-		glm::vec3 boxPos = getGameObject()->getComponent<Transform>()->getPosition() + offset;
+		glm::vec3 boxPos = getGameObject()->getComponent<Transform>()->getPosition();
+		triggerHit = false;
 
 		for (std::vector<std::shared_ptr<GameObject>>::iterator it = boxObjVec.begin();
 			it != boxObjVec.end(); it++)
@@ -42,10 +48,20 @@ namespace goodengine {
 
 			std::shared_ptr<BoxCollider> iterBox = (*it)->getComponent<BoxCollider>();
 
-			glm::vec3 respPos = iterBox->getCollisionResponse(boxPos, size);
+			glm::vec3 respPos = iterBox->getCollisionResponse(boxPos, offset, size);
 			boxPos = respPos;
-			boxPos = boxPos - offset;
 			getGameObject()->getComponent<Transform>()->setPosition(boxPos);
+
+			// Check triggerObject isn't null
+			if (triggerObject.lock())
+			{
+				// Check iterBox and triggerObject are the same, check if our position changed (and there was a collision)
+				if ((iterBox == triggerObject.lock()) && (lastPosition != boxPos))
+				{
+					triggerHit = true;
+				}
+			}
+
 			lastPosition = boxPos;
 		}
 	}
@@ -106,10 +122,12 @@ namespace goodengine {
 	}
 
 	// Returns where _pos should be after collision
-	glm::vec3 BoxCollider::getCollisionResponse(glm::vec3 _pos, glm::vec3 _size)
+	glm::vec3 BoxCollider::getCollisionResponse(glm::vec3 _pos, glm::vec3 _offset, glm::vec3 _size)
 	{
-		float amount = 0.05f;
-		float step = 0.05f;
+		_pos += _offset;
+
+		float amount = 0.01f;
+		float step = 0.01f;
 
 		while (true)
 		{
@@ -135,7 +153,7 @@ namespace goodengine {
 			amount += step;
 		}
 
+		_pos -= _offset;
 		return _pos;
 	}
-
 }

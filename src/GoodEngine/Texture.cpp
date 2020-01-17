@@ -1,14 +1,10 @@
-#pragma once
-
 #include "Texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION	// Only need to define this once
 #include "stb_image.h"
 
 #include <rend/rend.h>
-#include <sr1/memory>
 #include <SDL2/SDL.h>
-
 #include <iostream>
 #include <fstream>
 

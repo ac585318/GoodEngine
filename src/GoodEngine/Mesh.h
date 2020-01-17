@@ -1,7 +1,7 @@
-#include <vector>
-#include <rend/rend.h>
-
 #include <GoodEngine/Resource.h>
+
+#include <rend/rend.h>
+#include <vector>
 
 namespace goodengine {
 
@@ -26,9 +26,9 @@ namespace goodengine {
 		/// \param _path std::string of the file directory path
 		///
 		void load(std::string _path);
+
 	private:
 		friend class MeshRenderer;
 		std::shared_ptr<rend::Mesh> mesh;
 	};
-
 }

@@ -11,9 +11,6 @@ namespace goodengine {
 
 	Core::~Core()
 	{
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-
 		alcMakeContextCurrent(NULL);
 		alcDestroyContext(audioContext);	// This is supposed to be done twice?
 		alcDestroyContext(audioContext);
@@ -32,7 +29,7 @@ namespace goodengine {
 		}
 		rtn->window = SDL_CreateWindow("GoodEngine Window",
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-			WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+			WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
 
 		rtn->glContext = SDL_GL_CreateContext(rtn->window);
 
@@ -49,7 +46,7 @@ namespace goodengine {
 		rtn->enviroment = std::make_shared<Enviroment>();
 
 		// Initialize rend
-		rtn->context = rend::Context::initialize();
+		rtn->context = rend::Context::initialize(rtn->window);
 
 		// Initialize OpenAL / audio system
 		rtn->audioDevice = alcOpenDevice(NULL);
@@ -128,7 +125,6 @@ namespace goodengine {
 		{
 			time = SDL_GetTicks();
 			diff = time - lastTime;
-
 			enviroment->deltaTime = diff / 1000.0f;
 			lastTime = time;
 
@@ -138,8 +134,7 @@ namespace goodengine {
 				// Sleep off remaining time
 			//	SDL_Delay((idealTime - enviroment->deltaTime) * 1000.0f);
 			//}
-
-				// SHOULD MOVE THIS TIME STUFF INTO ITS OWN CLASS - TODO
+			// Could move all this time stuff into its own class
 			
 
 			// Clear pressed and released key vectors
@@ -228,5 +223,4 @@ namespace goodengine {
 			SDL_GL_SwapWindow(window);
 		}
 	}
-
 }

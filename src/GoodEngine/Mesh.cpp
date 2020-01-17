@@ -1,15 +1,10 @@
-#pragma once
-
 #include "Mesh.h"
+#include "Core.h"
 
 #include <rend/rend.h>
-#include <sr1/memory>
 #include <SDL2/SDL.h>
-
 #include <iostream>
 #include <fstream>
-
-#include "Core.h"
 
 namespace goodengine {
 
@@ -39,7 +34,6 @@ namespace goodengine {
 			mesh->parse(obj);
 		}
 
-		// Resources returns this mesh, no return needed here?
+		// Resources returns this mesh
 	}
-
 }

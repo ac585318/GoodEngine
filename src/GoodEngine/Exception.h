@@ -4,12 +4,14 @@
 namespace goodengine {
 	///
 	/// An exception handling struct.
+	/// Used to throw exceptions with messages
 	///
 	struct Exception : public std::exception
 	{
 	public:
 		///
-		/// \brief Sets an error message
+		/// \brief Sets an exception message
+		/// \param std::string containing exception message
 		///
 		Exception(const std::string& message);
 
@@ -19,12 +21,11 @@ namespace goodengine {
 		virtual ~Exception() throw();
 
 		///
-		/// \brief Returns the error message passed into the constructor
+		/// \brief Returns the exception message passed into the constructor
 		/// \return const char* exception message
 		virtual const char* what() const throw();
 
 	private:
 		std::string message;
 	};
-
 }

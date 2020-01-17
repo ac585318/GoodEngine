@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Component.h"
+#include "Transform.h"
 
 namespace goodengine {
 
@@ -14,7 +15,7 @@ namespace goodengine {
 		{
 			Components.at(i)->onTick();
 		}
-		// Erase component ptr if not alive
+		// Erase component ptr if not alive, could be put at the end of display()?
 		for (std::vector<std::shared_ptr<Component>>::iterator it = Components.begin(); it != Components.end();)
 		{
 			if (!(*it)->alive)
@@ -38,6 +39,12 @@ namespace goodengine {
 		{
 			Components.at(i)->onGui();
 		}
+	}
+
+	std::shared_ptr<Transform> GameObject::getTransform()
+	{
+		// Could be slower to use than manual
+		return getComponent<Transform>();
 	}
 }
 

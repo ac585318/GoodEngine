@@ -1,7 +1,6 @@
+#include <GoodEngine/Component.h>
 #include <AL/al.h>
 #include <AL/alc.h>
-
-#include <GoodEngine/Component.h>
 
 namespace goodengine {
 
@@ -20,7 +19,7 @@ namespace goodengine {
 
 		///
 		/// \brief Set if this object should self-destruct after playing an Audio file
-		/// \param _b a boolean. True to self-destruct. True by default
+		/// \param _b A boolean. True to self-destruct. True by default
 		///
 		void setAutoRemove(bool _b) { autoRemove = _b; }
 
@@ -29,7 +28,7 @@ namespace goodengine {
 		///
 		/// Set the Audio to be played
 		///
-		/// \param _audio a Audio object. Requires a set path to an audio file
+		/// \param _audio An Audio object set to play from this AudioSource. Requires a set path to an audio file
 		///
 		void setAudio(std::shared_ptr<Audio> _audio);
 
@@ -44,5 +43,4 @@ namespace goodengine {
 		ALuint sourceId;
 		std::shared_ptr<Audio> audio;
 	};
-
 }

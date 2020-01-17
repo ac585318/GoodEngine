@@ -9,6 +9,7 @@ namespace goodengine {
 
 	class Core;
 	class GameObject;
+	class Transform;
 	class Resources;
 	class Keyboard;
 	class Mouse;
@@ -24,45 +25,44 @@ namespace goodengine {
 		friend class goodengine::GameObject;
 
 		///
-		/// \brief Returns a shared pointer to the Core object
-		/// \return Shared pointer to Core
+		/// \brief Returns a reference to the Core object
+		/// \return A reference to Core
 		///
 		std::shared_ptr<Core> getCore();
 
 		///
-		/// \brief Returns the parent GameObject object
-		/// \return Shared pointer to the parent GameObject
+		/// \brief Returns the GameObject object this component is a member of
+		/// \return A reference to the GameObject
 		///
 		std::shared_ptr<GameObject> getGameObject();
 
 		///
 		/// \brief Returns the Resources object
-		/// \return Shared pointer to Resources
+		/// \return A reference to Resources
 		///
 		std::shared_ptr<Resources> getResources();
 
 		///
 		/// \brief Returns the Keyboard object
-		/// \return Shared pointer to Keyboard
+		/// \return A reference to Keyboard
 		///
 		std::shared_ptr<Keyboard> getKeyboard();
 
 		///
 		/// \brief Returns the Mouse object
-		/// \return Shared pointer to Mouse
+		/// \return A reference to Mouse
 		///
 		std::shared_ptr<Mouse> getMouse();
 
-		//													TEST THIS
-		//template <typename T>
-		//std::shared_ptr<T> getComponent()
-		//{
-		//	return gameObject.lock()->getComponent<T>();
-		//}
+		///
+		/// \brief A shortcut function to get the Transform Component from the GameObject
+		/// \return A Transform Component from the parent GameObject
+		///
+		std::shared_ptr<Transform> getTransform();
 
 	protected:
-		std::weak_ptr<GameObject> gameObject;	///< weak pointer to the owning GameObject
-		bool alive = true;						///< bool to check if the component should be kept alive if true, or destroyed if false
+		std::weak_ptr<GameObject> gameObject;		///< weak pointer reference to the owning GameObject
+		bool alive = true;							///< bool to check if the component should be kept alive if true, or destroyed if false
 
 		///
 		/// \brief a virtual initialize function
@@ -95,7 +95,6 @@ namespace goodengine {
 		///
 		virtual void onGui();
 	};
-
 }
 
 #endif

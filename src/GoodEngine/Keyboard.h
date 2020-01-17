@@ -3,7 +3,8 @@
 namespace goodengine {
 
 	///
-	/// A keyboard handling class using SDL keycodes
+	/// A keyboard handling class using SDL keycodes.
+	/// Use to check if a key is being held, pressed or released.
 	///
 	class Keyboard
 	{
@@ -35,5 +36,4 @@ namespace goodengine {
 		std::vector<int> keysPressed;
 		std::vector<int> keysReleased;
 	};
-
 }

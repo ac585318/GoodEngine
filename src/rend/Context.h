@@ -1,4 +1,5 @@
 #include <sr1/memory>
+#include <SDL2/SDL.h>
 
 namespace rend
 {
@@ -11,7 +12,9 @@ struct Mesh;
 
 struct Context
 {
-  static std::sr1::shared_ptr<Context> initialize();
+	~Context();
+
+  static std::sr1::shared_ptr<Context> initialize(SDL_Window* _window);
 
   std::sr1::shared_ptr<Texture> createTexture();
   std::sr1::shared_ptr<Shader> createShader();
@@ -21,6 +24,7 @@ struct Context
 
 private:
   std::sr1::weak_ptr<Context> self;
+  SDL_Window* window;
 
 };
 

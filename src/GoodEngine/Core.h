@@ -1,18 +1,16 @@
-#include <memory>
-#include <vector>
-
+#include <rend/rend.h>
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
-#include <rend/rend.h>
 
+#include <memory>
+#include <vector>
 #include <AL/al.h>
 #include <AL/alc.h>
-
 #include <exception>
 
 namespace goodengine {
 
-#define WINDOW_WIDTH 640
+#define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 640
 
 	class GameObject;
@@ -37,16 +35,81 @@ namespace goodengine {
 
 		///
 		/// \brief Initializes and returns the Core object
-		/// \return Shared pointer to the initialized Core
+		/// \return A reference to the initialized Core
 		///
-		static std::shared_ptr<Core> initialize();
-		// static makes this function more accessible to outside the engine (main.cpp)
+		static std::shared_ptr<Core> initialize();		// static makes this function more accessible to outside the engine (main.cpp)
 
 		///
 		/// \brief Add a new GameObject
-		/// \return Shared pointer to the newly created GameObject
+		/// \return A reference to the newly created GameObject
 		///
 		std::shared_ptr<GameObject> addGameObject();
+
+		///
+		/// \brief Get the active Camera which renders to the screen
+		/// \return A reference to active Camera. Returns nullptr if there is none
+		///
+		std::shared_ptr<Camera> getActiveCam();
+
+		///
+		/// \brief Run the Core / Good Engine
+		///
+		/// Use this is run the engine. This updates run-time only variables and classes,
+		/// such as Enviroment, and loops through all GameObject objects active in Core
+		///
+		void run();
+
+		///
+		/// \brief Returns the screen size, width and height
+		/// \return glm::vec2(window_width, window_height)
+		///
+		glm::vec2 getScreenSize() { return glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT); }
+
+		///
+		/// \brief Returns the Enviroment class
+		/// \return A reference to Enviroment
+		///
+		std::shared_ptr<Enviroment> getEnviroment() { return enviroment; }
+
+		///
+		/// \brief Returns the Context class
+		///
+		/// Use this to access the underlying rend library Context class and functions
+		///
+		/// \return A reference to rend::Context
+		///
+		std::shared_ptr<rend::Context> getContext() { return context; }
+
+		///
+		/// \brief Returns the Resources class
+		///
+		/// Use this to access the Gui class and functions
+		/// \return A reference to Resources
+		///
+		std::shared_ptr<Resources> getResources() { return resources; }
+
+		///
+		/// \brief Returns the Gui class
+		///
+		/// \return A reference to Gui
+		///
+		std::shared_ptr<Gui> getGui() { return gui; }
+
+		///
+		/// \brief Returns the Keyboard class
+		///
+		/// Use this to access the Keyboard class and functions
+		/// \return A reference to Keyboard
+		///
+		std::shared_ptr<Keyboard> getKeyboard() { return keyboard; }
+
+		///
+		/// \brief Returns the Mouse class
+		///
+		/// Use this to access the Mouse class and functions
+		/// \return A reference to Mouse
+		///
+		std::shared_ptr<Mouse> getMouse() { return mouse; }
 
 		///
 		/// \brief Returns all GameObject objects active in Core
@@ -85,54 +148,9 @@ namespace goodengine {
 					}
 				}
 			}
-			if (_rtn.empty()) throw rend::Exception("Failed to find specified game objects with component");	// Something is wrong with using goodengine::exception, maybe because they use the same file names?
+			if (_rtn.empty()) throw rend::Exception("Failed to find specified game objects with component");
 			return 0;
 		}
-
-		///
-		/// \brief Returns the Gui class
-		///
-		/// \return Shared pointer to Gui
-		///
-		std::shared_ptr<Gui> getGui() { return gui; }
-
-		///
-		/// \brief Returns the Resources class
-		///
-		/// Use this to access the Gui class and functions
-		/// \return Shared pointer to Resources
-		///
-		std::shared_ptr<Resources> getResources() { return resources; }
-
-		///
-		/// \brief Returns the Keyboard class
-		///
-		/// Use this to access the Keyboard class and functions
-		/// \return Shared pointer to Keyboard
-		///
-		std::shared_ptr<Keyboard> getKeyboard() { return keyboard; }
-
-		///
-		/// \brief Returns the Mouse class
-		///
-		/// Use this to access the Mouse class and functions
-		/// \return Shared pointer to Mouse
-		///
-		std::shared_ptr<Mouse> getMouse() { return mouse; }
-
-		///
-		/// \brief Returns the screen size, width and height
-		/// \return glm::vec2(window_width, window_height)
-		///
-		glm::vec2 getScreenSize() { return glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT); }
-
-		///
-		/// \brief Returns the Context class
-		///
-		/// Use this to access the underlying rend library Context class and functions
-		/// \return Shared pointer to rend::Context
-		///
-		std::shared_ptr<rend::Context> getContext() { return context; }
 
 		///
 		/// \brief Set the active Camera which renders to the screen
@@ -141,18 +159,10 @@ namespace goodengine {
 		void setActiveCam(std::shared_ptr<Camera> _cam) { activeCam = _cam; }
 
 		///
-		/// \brief Get the active Camera which renders to the screen
-		/// \return Shared pointer to active Camera. Returns nullptr if there is none
+		/// \breif Set the game to quit next tick, false by default
+		/// \param _b A bool to determine if the game quits, if true the game quits
 		///
-		std::shared_ptr<Camera> getActiveCam();
-
-		///
-		/// \brief Run the Core / Good Engine
-		///
-		/// Use this is run the engine. This updates run-time only variables and classes,
-		/// such as Enviroment, and loops through all GameObject objects active in Core
-		///
-		void run();
+		void quitGame(bool _b) { quit = _b; }
 
 	private:
 		std::weak_ptr<Core> self;
@@ -175,5 +185,4 @@ namespace goodengine {
 
 		bool quit;
 	};
-
 }

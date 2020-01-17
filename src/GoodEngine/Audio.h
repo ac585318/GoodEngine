@@ -1,12 +1,12 @@
+#include <GoodEngine/Resource.h>
 #include <AL/al.h>
 #include <AL/alc.h>
-
-#include <GoodEngine/Resource.h>
 
 namespace goodengine {
 
 	///
 	/// An Audio Resource class for loading ogg audio files / resources.
+	/// They are members of the AudioSource class.
 	///
 	class Audio : public Resource
 	{
@@ -17,8 +17,8 @@ namespace goodengine {
 		~Audio();
 
 		///
-		/// \brief Load an ogg audio file
-		/// \param _path the directory path to the file
+		/// \brief Load An ogg audio file
+		/// \param _path The directory path to the file
 		///
 		void load(std::string _path);
 
@@ -26,5 +26,4 @@ namespace goodengine {
 		friend class AudioSource;
 		ALuint bufferId;
 	};
-
 }

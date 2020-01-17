@@ -1,7 +1,8 @@
-#pragma once
 #include "Component.h"
 #include "GameObject.h"
+#include "Transform.h"
 #include "Core.h"
+
 namespace goodengine {
 
 	std::shared_ptr<Core> Component::getCore()
@@ -24,6 +25,11 @@ namespace goodengine {
 	{
 		return gameObject.lock()->getCore()->getMouse();
 	}
+	std::shared_ptr<Transform> Component::getTransform()
+	{
+		// Could be slower to use than manual
+		return gameObject.lock()->getTransform();
+	}
 	void Component::onInit()
 	{
 		//std::cout << "INIT" << std::endl;
@@ -40,5 +46,4 @@ namespace goodengine {
 	{
 		//std::cout << "DISPLAY" << std::endl;
 	}
-
 }

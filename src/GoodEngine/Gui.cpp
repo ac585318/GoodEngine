@@ -83,5 +83,4 @@ namespace goodengine {
 	}
 	// To do button... store _pos and texture in a guiElement/button class, return it
 	// Make a bool return "onHover" function here which takes a guiElement object, combine with core mouse inputs
-
 }

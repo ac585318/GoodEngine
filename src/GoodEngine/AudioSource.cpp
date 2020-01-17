@@ -1,6 +1,6 @@
 #include "AudioSource.h"
-
 #include "Audio.h"
+
 #include <iostream>
 
 namespace goodengine {
@@ -62,6 +62,4 @@ namespace goodengine {
 			}
 		}
 	}
-
-
 }

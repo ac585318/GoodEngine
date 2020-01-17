@@ -1,13 +1,9 @@
-#pragma once
-
 #include "Audio.h"
-
-#include <iostream>
-#include <fstream>
-
 #include "Core.h"
 
 #include "stb_vorbis.h"
+#include <iostream>
+#include <fstream>
 
 void load_ogg(const std::string& fileName, std::vector<char>& buffer, ALenum &format, ALsizei &freq);
 
